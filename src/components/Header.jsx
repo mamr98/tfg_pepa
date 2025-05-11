@@ -29,6 +29,12 @@ function Header() {
         <div className="flex items-center space-x-4 text-white text-xl">
           <Link to="/" className="flex items-center">
             <img
+              src="/images/logo/favs.png"
+              className="h-4"
+            />
+          </Link>
+          <Link to="/" className="flex items-center">
+            <img
               src="/images/iconos/tag.png"
               className="h-4"
             />
