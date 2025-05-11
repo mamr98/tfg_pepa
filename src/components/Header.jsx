@@ -4,8 +4,8 @@ import { FaUser, FaTags } from "react-icons/fa";
 
 function Header() {
   return (
-    <header className="bg-transparent py-4 px-6 fixed top-0 left-0 w-full z-[1000]">
-      <div className="flex items-center justify-between max-w-7xl mx-auto">
+    <header className="bg-transparent py-4 fixed top-0 left-0 w-full z-[1000]">
+      <div className="flex items-center justify-between px-[52px] gap-x-16">
         {/* Logo */}
         <div>
           <Link to="/">
@@ -18,7 +18,7 @@ function Header() {
         </div>
 
         {/* Navegación centrada */}
-        <nav className="flex space-x-8 text-white text-lg font-light">
+        <nav className="flex space-x-58 text-white text-lg font-light">
           <Link to="/tienda">tienda</Link>
           <Link to="/the-vault">the vault</Link>
           <Link to="/lookbook">lookbook</Link>
@@ -26,7 +26,7 @@ function Header() {
         </nav>
 
         {/* Iconos a la derecha */}
-        <div className="flex items-center space-x-4 text-white text-xl">
+        <div className="flex items-center space-x-8 text-white text-xl">
           <Link to="/" className="flex items-center">
             <img
               src="/images/logo/favs.png"
