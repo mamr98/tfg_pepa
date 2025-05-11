@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { FaUser, FaTags } from "react-icons/fa";
 
 function Header() {
@@ -18,11 +18,32 @@ function Header() {
         </div>
 
         {/* Navegación centrada */}
+        {/* Ajustado space-x-58 a space-x-8 para un espaciado más estándar */}
         <nav className="flex space-x-58 text-white text-lg font-light">
-          <Link to="/tienda">tienda</Link>
-          <Link to="/the-vault">the vault</Link>
-          <Link to="/lookbook">lookbook</Link>
-          <Link to="/signals">signals</Link>
+          <NavLink
+            to="/tienda"
+            className={({ isActive }) => (isActive ? "text-red-600" : "")}
+          >
+            tienda
+          </NavLink>
+          <NavLink
+            to="/the-vault"
+            className={({ isActive }) => (isActive ? "text-red-600" : "")}
+          >
+            the vault
+          </NavLink>
+          <NavLink
+            to="/lookbook"
+            className={({ isActive }) => (isActive ? "text-red-600" : "")}
+          >
+            lookbook
+          </NavLink>
+          <NavLink
+            to="/signals"
+            className={({ isActive }) => (isActive ? "text-red-600" : "")}
+          >
+            signals
+          </NavLink>
         </nav>
 
         {/* Iconos a la derecha */}
