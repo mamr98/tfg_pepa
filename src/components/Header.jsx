@@ -19,7 +19,7 @@ function Header() {
 
         {/* Navegación centrada */}
         {/* Ajustado space-x-58 a space-x-8 para un espaciado más estándar */}
-        <nav className="flex space-x-58 text-white text-lg font-light">
+        <nav className="flex space-x-48 text-white text-lg font-light">
           <NavLink
             to="/tienda"
             className={({ isActive }) => (isActive ? "text-red-600" : "")}
