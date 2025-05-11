@@ -1,1 +1,23 @@
 @import "tailwindcss";
+@import url("https://use.typekit.net/yrh4bak.css");
+
+@layer base {
+  html {
+    font-family: "roc-grotesk", sans-serif;
+    font-weight: 500; /* Este será el peso normal para tu texto */
+    font-style: normal;
+  }
+
+  strong,
+  b,
+  .font-bold { /* Aplicar a elementos de negrita y a la clase .font-bold de Tailwind */
+    font-weight: 700;
+    font-style: normal; /* Asegurar que el estilo de fuente sea normal si no se desea cursiva */
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-black text-white;
+  }
+}

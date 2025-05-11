@@ -14,7 +14,8 @@ function App() {
   return (
     <Router>
       <Header />
-      <main>
+      {/* Añadimos padding-top para que el contenido no se solape con el Header fijo */}
+      <main className="pt-[82px]">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/tienda" element={<Tienda />} />
