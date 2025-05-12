@@ -8,7 +8,6 @@ function Producto() {
         <h1>Producto</h1>
         <p>Aquí se mostrarán los detalles del producto.</p>
       </div>
-      <Footer />
     </main>
   );
 }

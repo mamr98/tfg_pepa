@@ -7,6 +7,7 @@ import Lookbook from './Pages/Lookbook';
 import Signals from './Pages/Signals';
 import Ocultas from './Pages/Ocultas';
 import NotFound from './Pages/NotFound';
+import Footer from './Pages/Footer';
 import './App.css'
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
           <Route path="*" element={<NotFound />} /> {/* Assuming NotFound.jsx is in src/Pages/ */}
         </Routes>
       </main>
+      <Footer />
     </Router>
   )
 }

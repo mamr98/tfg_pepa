@@ -48,7 +48,6 @@ function Tienda() {
         <h1>Tienda</h1>
         <p>Explora nuestros productos.</p>
       </div>
-      <Footer />
     </main>
   );
 }

@@ -8,7 +8,6 @@ function Signals() {
         <h1>Signals</h1>
         <p>Descubre las últimas señales.</p>
       </div>
-      <Footer />
     </main>
   );
 }
