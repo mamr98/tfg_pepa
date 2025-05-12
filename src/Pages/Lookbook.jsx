@@ -20,7 +20,7 @@ function Lookbook() {
 
   return (
     <main className="flex flex-col items-center py-8">
-      <div className="container max-w-4xl mb-20 mt-2 flex">
+      <div className="container max-w-4xl mb-20 flex">
         <div className="flex-grow mr-8">
           <img
             src={currentLargeImage}
