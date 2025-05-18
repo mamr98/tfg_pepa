@@ -11,9 +11,25 @@ const socialTexts = {
 
 function ContentFooter() {
   const [hovered, setHovered] = useState(null);
+  const [isDesktop, setIsDesktop] = useState(false);
   const containerRef = useRef(null);
 
   useEffect(() => {
+    // Detect if device supports hover (desktop)
+    const mql = window.matchMedia("(hover: hover)");
+    setIsDesktop(mql.matches);
+
+    function handleChange(e) {
+      setIsDesktop(e.matches);
+    }
+
+    mql.addEventListener("change", handleChange);
+    return () => mql.removeEventListener("change", handleChange);
+  }, []);
+
+  useEffect(() => {
+    if (!isDesktop) return;
+
     const buttons = document.querySelectorAll(".magnetic");
     const strength = 40;
 
@@ -40,7 +56,7 @@ function ContentFooter() {
       container?.removeEventListener("mousemove", handleMove);
       container?.removeEventListener("mouseleave", reset);
     };
-  }, []);
+  }, [isDesktop]);
 
   return (
     <footer
@@ -61,7 +77,7 @@ function ContentFooter() {
         </div>
 
         {/* Texto dinámico: solo si hay hovered */}
-        {hovered && (
+        {hovered && isDesktop && (
           <div className="md:mt-40 md:text-right md:max-w-sm transition-opacity duration-300 mt-10">
             {hovered === "telegram" ? (
               <>
@@ -99,8 +115,8 @@ function ContentFooter() {
             <div
               key={id}
               className="magnetic cursor-pointer transition-transform duration-300"
-              onMouseEnter={() => setHovered(id)}
-              onMouseLeave={() => setHovered(null)}
+              onMouseEnter={isDesktop ? () => setHovered(id) : undefined}
+              onMouseLeave={isDesktop ? () => setHovered(null) : undefined}
             >
               {icon}
             </div>
