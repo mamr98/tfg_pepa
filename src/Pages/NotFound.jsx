@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 
-const stickerImage = '/images/stickers/boca.png';
+const stickerImage = '/images/error/sticker_error.png';
 const stickerHoverImage = '/images/stickers/boca_hover.png';
 const logoImage = '/images/logo/logo.svg';
 const backgroundImage = '/images/error/error.png';
