@@ -13,19 +13,19 @@ function DraggableSticker() {
   const offset = useRef({ x: 0, y: 0 });
 
   // Responsive sticker size
-  const [stickerSize, setStickerSize] = useState(100);
+  const [stickerSize, setStickerSize] = useState(150);
 
   useEffect(() => {
     function handleResize() {
       if (window.innerWidth < 600) {
-        setStickerSize(60);
+        setStickerSize(80);
         // reposition if out of bounds
         setPosition(pos => ({
-          x: Math.min(pos.x, window.innerWidth - 70),
-          y: Math.min(pos.y, window.innerHeight - 70),
+          x: Math.min(pos.x, window.innerWidth - 90),
+          y: Math.min(pos.y, window.innerHeight - 90),
         }));
       } else {
-        setStickerSize(100);
+        setStickerSize(150);
       }
     }
     window.addEventListener('resize', handleResize);
@@ -71,7 +71,7 @@ function DraggableSticker() {
 
   return (
     <img
-      src={hover ? stickerHoverImage : stickerImage}
+      src={hover ? stickerImage : stickerImage}
       alt="Sticker"
       ref={stickerRef}
       onMouseDown={onMouseDown}
