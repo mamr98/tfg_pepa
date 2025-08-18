@@ -70,19 +70,47 @@ function Home() {
         </div>
       </div>
 
-      {/* Contenido original de la página */}
-      <div className="p-8">
-        <h1>Home</h1>
-        <p>Bienvenido a la página principal.</p>
-        <h1>Home</h1>
-        <p>Bienvenido a la página principal.</p>
-        <h1>Home</h1>
-        <p>Bienvenido a la página principal.</p>
-        <h1>Home</h1>
-        <p>Bienvenido a la página principal.</p>
-        <h1>Home</h1>
-        <p>Bienvenido a la página principal.</p>
+      {/* Sección de dos imágenes */}
+      <div className="flex w-full">
+        <div className="w-1/2">
+          <img src="/images/home/home_3.2.1.jpg" alt="Collage de imágenes 1" className="w-full h-auto object-cover" />
+        </div>
+        <div className="w-1/2">
+          <img src="/images/home/home_3.2.2.png" alt="Collage de imágenes 2" className="w-full h-auto object-cover" />
+        </div>
       </div>
+
+      <div className="relative h-screen w-full flex items-center justify-center overflow-hidden">
+        <img
+          src="/images/home/home_3.3.parallax.jpg"
+          alt="Discover yourself background"
+          className="absolute top-0 left-0 w-full h-full object-cover transition-all duration-200 ease-in-out"
+        />
+        <div
+          className="relative z-10 text-center cursor-pointer"
+          onMouseEnter={() => setIsHovering(true)}
+          onMouseLeave={() => setIsHovering(false)}
+        >
+        </div>
+      </div>
+
+      <div className="w-full grid grid-cols-5">
+        {Array.from({ length: 10 }).map((_, index) => (
+          <div key={index}>
+            <img
+              src="/images/home/home_3.4_X10.png"
+              alt={`Imagen repetida ${index + 1}`}
+              className="w-full h-auto object-cover"
+            />
+          </div>
+        ))}
+      </div>
+
+      {/* Contenido original de la página */}
+      {/* <div className="p-8">
+        <h1>Home</h1>
+        <p>Bienvenido a la página principal.</p>
+      </div> */}
     </main>
   );
 }
