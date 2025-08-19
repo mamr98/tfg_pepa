@@ -94,7 +94,7 @@ function Lookbook() {
               ))}
             </div>
             <p
-              className="font-sans font-bold text-xl uppercase mt-8 md:mt-0 md:ml-4 transform -rotate-270 origin-top-right whitespace-nowrap"
+              className="font-sans font-bold text-xl uppercase mt-8 mb-100 md:mt-0 md:ml-4 transform -rotate-270 origin-top-right whitespace-nowrap"
             >
               VOL.01
             </p>
