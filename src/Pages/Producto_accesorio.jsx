@@ -3,22 +3,20 @@ import { FaRegHeart, FaHeart } from "react-icons/fa";
 
 // Datos del producto (usando el producto de tienda3.png como ejemplo)
 const product = {
-  id: 3,
+  id: 1,
   name: "Gorra 'Signal'",
   price: "24.99€",
-  description: "Una gorra que no solo te protege del sol, sino que envía una señal. Estilo y misterio en un solo accesorio, para los que saben que cada detalle cuenta.",
-  imageUrl: "/images/tienda/tienda3.png",
+  description: "Un accesorio que no solo te protege del sol, sino que envía una señal. Estilo y misterio en un solo accesorio, para los que saben que cada detalle cuenta.",
+  imageUrl: "/images/tienda/tienda1.png",
   thumbnails: [
-    "/images/tienda/tienda3.png",
-    "/images/tienda/tienda3.png",
-    "/images/tienda/tienda3.png",
-    "/images/tienda/tienda3.png",
+    "/images/tienda/tienda1.png",
+    "/images/tienda/tienda1.png",
+    "/images/tienda/tienda1.png",
+    "/images/tienda/tienda1.png",
   ],
-  sizes: ["S", "M", "L"],
   details: "Confeccionada con materiales de alta calidad, esta gorra presenta un diseño minimalista con el icónico logo de 8CHO bordado. Cierre ajustable para un ajuste perfecto."
 };
-
-function Producto() {
+function Producto_accesorio() {
   const [selectedSize, setSelectedSize] = useState(null);
   const [isLiked, setIsLiked] = useState(false);
   const [detailsOpen, setDetailsOpen] = useState(false);
@@ -48,26 +46,6 @@ function Producto() {
           <h1 className="text-3xl font-bold uppercase">{product.name}</h1>
           <p className="text-gray-300">{product.description}</p>
           
-          <hr className="border-t border-gray-700" />
-
-          <div>
-            <div className="flex gap-2">
-              {product.sizes.map((size) => (
-                <button
-                  key={size}
-                  onClick={() => setSelectedSize(size)}
-                  className={`w-12 h-12 border-2 rounded transition-colors ${
-                    selectedSize === size
-                      ? 'bg-white text-black border-white'
-                      : 'border-gray-500 text-white hover:bg-gray-800'
-                  }`}
-                >
-                  {size}
-                </button>
-              ))}
-            </div>
-          </div>
-
           <hr className="border-t border-gray-700" />
 
           <div className="flex items-center gap-4">
@@ -106,4 +84,4 @@ function Producto() {
   );
 }
 
-export default Producto;
+export default Producto_accesorio;

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 
 // Aquí defines la lista de productos.
@@ -9,24 +10,28 @@ const productsData = [
     name: "Camiseta 'Origins'",
     price: "34.99€",
     imageUrl: "/images/tienda/tienda1.png",
+    tipo: "accesorio"
   },
   {
     id: 2,
     name: "Sudadera 'Vault'",
     price: "69.99€",
     imageUrl: "/images/tienda/tienda2.png",
+    tipo: "accesorio"
   },
   {
     id: 3,
     name: "Gorra 'Signal'",
     price: "24.99€",
     imageUrl: "/images/tienda/tienda3.png",
+    tipo: "ropa"
   },
   {
     id: 4,
     name: "Pantalón Cargo",
     price: "79.99€",
     imageUrl: "/images/tienda/tienda4.png",
+    tipo: "ropa"
   },
   // Añade más productos aquí según necesites
 ];
@@ -55,11 +60,13 @@ function Tienda() {
       <div className="grid grid-cols-2 gap-4">
         {products.map((product) => (
           <div key={product.id} className="relative text-white group">
-            <img
-              src={product.imageUrl}
-              alt={product.name}
-              className="w-full h-auto object-cover aspect-[3/4]"
-            />
+            <Link to={product.tipo === 'ropa' ? '/producto' : '/producto_accesorio'}>
+              <img
+                src={product.imageUrl}
+                alt={product.name}
+                className="w-full h-auto object-cover aspect-[3/4]"
+              />
+            </Link>
             {/* Corazón (arriba a la izquierda) */}
             <button
               onClick={() => handleToggleLike(product.id)}

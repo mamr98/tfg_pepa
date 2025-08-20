@@ -8,14 +8,19 @@ import Signals from './Pages/Signals';
 import Ocultas from './Pages/Ocultas';
 import Footer from './Pages/Footer';
 import NotFound from './Pages/NotFound';
+import Producto from './Pages/Producto';
+import ProductoAccesorio from './Pages/Producto_accesorio';
 import './App.css'
 
 // Creamos un componente wrapper para poder usar useLocation
 function AppContent() {
   const location = useLocation();
   // List of paths where header and footer should be shown
-  const pathsWithHeaderFooter = ['/', '/tienda', '/the-vault', '/lookbook', '/signals', '/short-film'];
-  const showHeaderFooter = pathsWithHeaderFooter.includes(location.pathname);
+  const pathsWithHeaderFooter = ['/', '/tienda', '/the-vault', '/lookbook', '/signals', '/short-film', '/producto', '/producto_accesorio'];
+  // This check now supports exact paths and sub-paths (for dynamic routes like /producto/123)
+  const showHeaderFooter = pathsWithHeaderFooter.some(path =>
+    location.pathname === path || (path !== '/' && location.pathname.startsWith(path + '/'))
+  );
 
   return (
     <>
@@ -30,6 +35,8 @@ function AppContent() {
           <Route path="/lookbook" element={<Lookbook />} /> {/* Assuming Lookbook.jsx is in src/Pages/ */}
           <Route path="/signals" element={<Signals />} /> {/* Assuming Signals.jsx is in src/Pages/ */}
           <Route path="/short-film" element={<Ocultas />} /> {/* Assuming Ocultas.jsx is in src/Pages/ */}
+          <Route path="/producto" element={<Producto />} />
+          <Route path="/producto_accesorio" element={<ProductoAccesorio />} />
           <Route path="*" element={<NotFound />} /> {/* Assuming NotFound.jsx is in src/Pages/ */}
         </Routes>
       </main>
