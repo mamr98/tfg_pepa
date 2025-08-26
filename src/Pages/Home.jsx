@@ -7,10 +7,18 @@ const hoverImages = [
   "/images/home/home_3.2.1.jpg",
   "/images/home/home_3.2.2.png",
 ];
+// Array con las imágenes para la cuadrícula animada
+const gridImages = [
+  "/images/home/home_3.4.1.jpg",
+  "/images/home/home_3.4.2.jpg",
+  "/images/home/home_3.4.3.jpg",
+];
 
 function Home() {
   const [currentImage, setCurrentImage] = useState(defaultImage);
   const [isHovering, setIsHovering] = useState(false);
+  // Nuevo estado para el índice de la imagen de la cuadrícula
+  const [gridImageIndex, setGridImageIndex] = useState(0);
 
   // Efecto de scroll suave con Lenis
   useEffect(() => {
@@ -47,6 +55,16 @@ function Home() {
       }
     };
   }, [isHovering]);
+
+  // Efecto para el carrusel de la cuadrícula de imágenes
+  useEffect(() => {
+    const gridInterval = setInterval(() => {
+      // Actualiza al siguiente índice de imagen en un ciclo
+      setGridImageIndex(current => (current + 1) % gridImages.length);
+    }, 1500); // Cambia la imagen cada 1.5 segundos para un efecto más suave
+
+    return () => clearInterval(gridInterval); // Limpia el intervalo al desmontar
+  }, []); // El array vacío asegura que se ejecute solo una vez
 
   return (
     <main>
@@ -96,12 +114,20 @@ function Home() {
 
       <div className="w-full grid grid-cols-5">
         {Array.from({ length: 10 }).map((_, index) => (
-          <div key={index}>
-            <img
-              src="/images/home/home_3.4_X10.png"
-              alt={`Imagen repetida ${index + 1}`}
-              className="w-full h-auto object-cover"
-            />
+          <div key={index} className="relative overflow-hidden aspect-[3/4]">
+            {gridImages.map((imgSrc, imgIndex) => (
+              <img
+                key={imgSrc}
+                src={imgSrc}
+                alt={`Imagen de la cuadrícula ${index + 1}`}
+                className="absolute top-0 left-0 w-full h-full object-cover transition-transform duration-700 ease-in-out"
+                style={{
+                  transform: `translateX(${
+                    (imgIndex - gridImageIndex) * 100
+                  }%)`,
+                }}
+              />
+            ))}
           </div>
         ))}
       </div>
