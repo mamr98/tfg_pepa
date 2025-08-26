@@ -65,7 +65,7 @@ function Signals() {
       <div className="relative z-10">
 
         {/* Contenedor de la galería de imágenes */}
-        <div className="container mx-auto px-8 pt-84 pb-12">
+        <div className="container mx-auto px-8 pt-66 pb-12">
           <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-3">
             {signalsData.map((signal) => (
               <div

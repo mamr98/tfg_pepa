@@ -14,7 +14,7 @@ const product = {
     "/images/tienda/tienda3.png",
     "/images/tienda/tienda3.png",
   ],
-  sizes: ["S", "M", "L"],
+  sizes: ["S", "M", "L", "XL", "XXL"],
   details: "Confeccionada con materiales de alta calidad, esta gorra presenta un diseño minimalista con el icónico logo de 8CHO bordado. Cierre ajustable para un ajuste perfecto."
 };
 
@@ -32,7 +32,7 @@ function Producto() {
         </div>
 
         {/* Columna 2: Miniaturas */}
-        <div className="w-full md:w-[15%] flex flex-row md:flex-col gap-2 mb-4 md:mb-0">
+        <div className="w-full md:w-[8.4%] flex flex-row md:flex-col gap-2 mb-4 md:mb-0">
           {product.thumbnails.map((thumb, index) => (
             <img 
               key={index} 
@@ -51,12 +51,12 @@ function Producto() {
           <hr className="border-t border-gray-700" />
 
           <div>
-            <div className="flex gap-2">
+            <div className="flex justify-between">
               {product.sizes.map((size) => (
                 <button
                   key={size}
                   onClick={() => setSelectedSize(size)}
-                  className={`w-12 h-12 border-2 rounded transition-colors ${
+                  className={`w-22 h-12  ${
                     selectedSize === size
                       ? 'bg-white text-black border-white'
                       : 'border-gray-500 text-white hover:bg-gray-800'

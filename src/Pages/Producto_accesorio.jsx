@@ -30,7 +30,7 @@ function Producto_accesorio() {
         </div>
 
         {/* Columna 2: Miniaturas */}
-        <div className="w-full md:w-[15%] flex flex-row md:flex-col gap-2 mb-4 md:mb-0">
+        <div className="w-full md:w-[8.4%] flex flex-row md:flex-col gap-2 mb-4 md:mb-0">
           {product.thumbnails.map((thumb, index) => (
             <img 
               key={index} 
@@ -45,7 +45,7 @@ function Producto_accesorio() {
         <div className="w-full md:w-[50%] flex flex-col space-y-6">
           <h1 className="text-3xl font-bold uppercase">{product.name}</h1>
           <p className="text-gray-300">{product.description}</p>
-          
+
           <hr className="border-t border-gray-700" />
 
           <div className="flex items-center gap-4">

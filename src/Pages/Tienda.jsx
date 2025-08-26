@@ -70,21 +70,21 @@ function Tienda() {
             {/* Corazón (arriba a la izquierda) */}
             <button
               onClick={() => handleToggleLike(product.id)}
-              className="absolute top-3 left-3 text-white text-2xl z-10 transition-transform duration-200 ease-in-out hover:scale-110"
+              className="absolute top-6 left-6 text-white text-2xl z-10 transition-transform duration-200 ease-in-out hover:scale-110"
             >
               {product.isLiked ? <FaHeart className="text-red-500" /> : <FaRegHeart />}
             </button>
 
             {/* Número del item (arriba a la derecha) */}
-            <span className="absolute top-3 right-3 text-lg font-mono z-10">
+            <span className="absolute top-6 right-6 text-lg font-mono z-10">
               {String(product.id).padStart(2, "0")}
             </span>
 
             {/* Subtítulo y precio (abajo a la izquierda) */}
-            <div className="absolute bottom-3 left-3 z-10 mb-5">
+            <div className="absolute bottom-6 left-6 z-10 mb-5">
               <h3 className="font-semibold text-base uppercase">{product.name}</h3>
             </div>
-            <div className="absolute bottom-3 left-3 z-10">
+            <div className="absolute bottom-6 left-6 z-10">
               <p className="text-base">{product.price}</p>
             </div>
           </div>
