@@ -1,23 +1,22 @@
 import React, { useRef, useState, useEffect } from 'react';
 
 const stickerImage = '/images/error/sticker_error.png';
-const stickerHoverImage = '/images/stickers/boca_hover.png';
 const logoImage = '/images/logo/logo.svg';
 const backgroundImage = '/images/error/error.png';
 
 function DraggableSticker() {
   const stickerRef = useRef(null);
   const [dragging, setDragging] = useState(false);
-  const [hover, setHover] = useState(false);
   const [position, setPosition] = useState({ x: 100, y: 100 });
   const offset = useRef({ x: 0, y: 0 });
+  const isDraggingRef = useRef(false);
 
   // Responsive sticker size
   const [stickerSize, setStickerSize] = useState(150);
 
   useEffect(() => {
     function handleResize() {
-      if (window.innerWidth < 600) {
+      if (window.innerWidth < 1024) {
         setStickerSize(80);
         // reposition if out of bounds
         setPosition(pos => ({
@@ -33,50 +32,52 @@ function DraggableSticker() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const onMouseDown = (e) => {
+  const handleDragStart = (e) => {
+    const event = e.type === 'mousedown' ? e : e.touches[0];
     setDragging(true);
+    isDraggingRef.current = true;
     const rect = stickerRef.current.getBoundingClientRect();
     offset.current = {
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
+      x: event.clientX - rect.left,
+      y: event.clientY - rect.top,
     };
   };
 
-  const onMouseMove = (e) => {
-    if (dragging) {
-      setPosition({
-        x: e.clientX - offset.current.x,
-        y: e.clientY - offset.current.y,
-      });
-    }
-  };
-
-  const onMouseUp = () => {
+  const handleDragEnd = () => {
     setDragging(false);
+    isDraggingRef.current = false;
   };
 
   useEffect(() => {
-    if (dragging) {
-      window.addEventListener('mousemove', onMouseMove);
-      window.addEventListener('mouseup', onMouseUp);
-    } else {
-      window.removeEventListener('mousemove', onMouseMove);
-      window.removeEventListener('mouseup', onMouseUp);
-    }
-    return () => {
-      window.removeEventListener('mousemove', onMouseMove);
-      window.removeEventListener('mouseup', onMouseUp);
+    const handleDragMove = (e) => {
+      if (!isDraggingRef.current) return;
+      const event = e.type === 'mousemove' ? e : e.touches[0];
+      setPosition({
+        x: event.clientX - offset.current.x,
+        y: event.clientY - offset.current.y,
+      });
     };
-  }, [dragging]);
+
+    window.addEventListener('mousemove', handleDragMove);
+    window.addEventListener('touchmove', handleDragMove);
+    window.addEventListener('mouseup', handleDragEnd);
+    window.addEventListener('touchend', handleDragEnd);
+
+    return () => {
+      window.removeEventListener('mousemove', handleDragMove);
+      window.removeEventListener('touchmove', handleDragMove);
+      window.removeEventListener('mouseup', handleDragEnd);
+      window.removeEventListener('touchend', handleDragEnd);
+    };
+  }, []);
 
   return (
     <img
-      src={hover ? stickerImage : stickerImage}
+      src={stickerImage}
       alt="Sticker"
       ref={stickerRef}
-      onMouseDown={onMouseDown}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
+      onMouseDown={handleDragStart}
+      onTouchStart={handleDragStart}
       style={{
         position: 'absolute',
         left: position.x,
@@ -103,7 +104,7 @@ function DrawingArea() {
 
   useEffect(() => {
     function handleResize() {
-      if (window.innerWidth < 600) {
+      if (window.innerWidth < 1024) {
         setCanvasSize({ width: window.innerWidth - 40, height: 180 });
       } else {
         setCanvasSize({ width: 400, height: 300 });
@@ -125,16 +126,34 @@ function DrawingArea() {
     setContext(ctx);
   }, [canvasSize]);
 
+  const getCoords = (e) => {
+    if (e.nativeEvent.touches && e.nativeEvent.touches.length > 0) {
+      const rect = e.target.getBoundingClientRect();
+      return {
+        x: e.nativeEvent.touches[0].clientX - rect.left,
+        y: e.nativeEvent.touches[0].clientY - rect.top,
+      };
+    }
+    return {
+      x: e.nativeEvent.offsetX,
+      y: e.nativeEvent.offsetY,
+    };
+  };
+
   const startDrawing = (e) => {
     if (!context) return;
+    e.preventDefault();
+    const { x, y } = getCoords(e);
     context.beginPath();
-    context.moveTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+    context.moveTo(x, y);
     setDrawing(true);
   };
 
   const draw = (e) => {
     if (!drawing || !context) return;
-    context.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+    e.preventDefault();
+    const { x, y } = getCoords(e);
+    context.lineTo(x, y);
     context.stroke();
   };
 
@@ -144,23 +163,11 @@ function DrawingArea() {
     setDrawing(false);
   };
 
-  const saveDrawing = () => {
-    const canvas = canvasRef.current;
-    const dataUrl = canvas.toDataURL('image/png');
-    const link = document.createElement('a');
-    link.href = dataUrl;
-    link.download = 'drawing.png';
-    link.click();
-  };
-
   // Responsive styles
-  const isMobile = window.innerWidth < 600;
+  const isMobile = window.innerWidth < 1024;
   const areaStyle = isMobile
     ? {
-        position: 'fixed',
-        left: '50%',
-        bottom: 10,
-        transform: 'translateX(-50%)',
+        position: 'relative',
         background: '#fff',
         borderRadius: 12,
         boxShadow: '0 2px 12px #0002',
@@ -168,6 +175,7 @@ function DrawingArea() {
         width: '90vw',
         maxWidth: 400,
         zIndex: 20,
+        order: 1, // Place it before the text on mobile
       }
     : {
         position: 'absolute',
@@ -198,11 +206,14 @@ function DrawingArea() {
         onMouseMove={draw}
         onMouseUp={stopDrawing}
         onMouseLeave={stopDrawing}
+        onTouchStart={startDrawing}
+        onTouchMove={draw}
+        onTouchEnd={stopDrawing}
         width={canvasSize.width}
         height={canvasSize.height}
       />
       <button
-        onClick={saveDrawing}
+        //onClick={saveDrawing}
         style={{
           padding: isMobile ? '6px 10px' : '6px 16px',
           borderRadius: 6,
@@ -214,7 +225,7 @@ function DrawingArea() {
           width: '100%',
         }}
       >
-        Guardar dibujo
+        Enviar
       </button>
     </div>
   );
@@ -223,11 +234,11 @@ function DrawingArea() {
 function NotFound() {
   // Responsive background size
   const [bgSize, setBgSize] = useState('70%');
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 600);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
 
   useEffect(() => {
     function handleResize() {
-      setIsMobile(window.innerWidth < 600);
+      setIsMobile(window.innerWidth < 1024);
       if (window.innerWidth < 600) {
         setBgSize('120%');
       } else {
@@ -239,27 +250,59 @@ function NotFound() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  return (
-    <div
-      style={{
+  const pageStyle = {
+    position: 'relative',
+    minHeight: '100vh',
+    height: isMobile ? 'auto' : '100vh',
+    backgroundImage: `url(${backgroundImage})`,
+    backgroundSize: bgSize,
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+    backgroundAttachment: 'fixed',
+    color: '#fff',
+    overflow: isMobile ? 'auto' : 'hidden',
+    padding: isMobile ? '20px 15px' : '40px',
+    fontFamily: 'Arial, sans-serif',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: '20px',
+  };
+
+  const pStyle = isMobile
+    ? {
         position: 'relative',
-        height: '100vh',
-        backgroundImage: `url(${backgroundImage})`,
-        backgroundSize: bgSize,
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
+        maxWidth: '95vw',
+        fontSize: 20,
+        textAlign: 'center',
         color: '#fff',
-        overflow: 'hidden',
-        paddingTop: isMobile ? 20 : 40,
-        fontFamily: 'Arial, sans-serif',
-      }}
-    >
+        zIndex: 15,
+        background: 'rgba(0,0,0,0.4)',
+        borderRadius: 8,
+        padding: 12,
+        order: 2,
+      }
+    : {
+        position: 'absolute',
+        bottom: 20,
+        left: 20,
+        maxWidth: 900,
+        fontSize: 40,
+        margin: 30,
+        textAlign: 'left',
+        color: '#fff',
+        zIndex: 15,
+      };
+
+  return (
+    <div style={pageStyle}>
       <a
         href="/"
         style={{
           display: 'block',
-          margin: isMobile ? '0 auto 10px auto' : '0 auto 20px auto',
+          margin: isMobile ? '0 auto' : '0 auto 20px auto',
           width: isMobile ? 100 : 150,
+          order: isMobile ? -1 : 'unset',
         }}
       >
         <img
@@ -274,28 +317,12 @@ function NotFound() {
         />
       </a>
 
-      <p
-        style={{
-          position: 'absolute',
-          bottom: isMobile ? 40 : 20,
-          left: isMobile ? 10 : 20,
-          right: isMobile ? 10 : 'auto',
-          maxWidth: isMobile ? '95vw' : 900,
-          fontSize: isMobile ? 20 : 40,
-          margin: isMobile ? 10 : 30,
-          textAlign: 'left',
-          color: '#fff',
-          zIndex: 15,
-          background: isMobile ? 'rgba(0,0,0,0.4)' : 'none',
-          borderRadius: isMobile ? 8 : 0,
-          padding: isMobile ? 8 : 0,
-        }}
-      >
+      <DrawingArea />
+      <p style={pStyle}>
         Oops... Te perdiste pero hey, aún puedes hacer algo útil con tu tiempo y dibujarnos algo. Y si no, vuelve atrás y suscríbete – la próxima 8CHO viene cargada.
       </p>
 
       <DraggableSticker />
-      {!isMobile && <DrawingArea />}
     </div>
   );
 }
