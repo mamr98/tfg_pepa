@@ -112,11 +112,18 @@ function Home() {
             />
           )}
         </div>
-        <img
-          src="/images/stickers/8CHO_RECEIPTIFY.jpg"
-          alt="Sticker 8CHO RECEIPTIFY"
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-64 pointer-events-none rotate-3"
-        />
+        <a
+          href="https://open.spotify.com/playlist/2mO0RTDEdJ2aWlY1bqG0iM?si=Wwncd4mfTKm1IClC0MYePg"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-64 rotate-3 transition-transform duration-300 ease-in-out hover:scale-110"
+        >
+          <img
+            src="/images/stickers/8CHO_RECEIPTIFY.jpg"
+            alt="Sticker 8CHO RECEIPTIFY"
+            className="w-full h-auto"
+          />
+        </a>
       </div>
 
       <div className="relative h-screen w-full flex items-center justify-center overflow-hidden">
