@@ -19,6 +19,8 @@ function Home() {
   const [isHovering, setIsHovering] = useState(false);
   // Nuevo estado para el índice de la imagen de la cuadrícula
   const [gridImageIndex, setGridImageIndex] = useState(0);
+  // Nuevo estado para el hover de la segunda imagen
+  const [isHoveringSecondImage, setIsHoveringSecondImage] = useState(false);
 
   // Efecto de scroll suave con Lenis
   useEffect(() => {
@@ -93,8 +95,22 @@ function Home() {
         <div className="w-1/2">
           <img src="/images/home/home_3.2.1.jpg" alt="Collage de imágenes 1" className="w-full h-auto object-cover" />
         </div>
-        <div className="w-1/2">
+        <div
+          className="w-1/2 relative cursor-pointer"
+          onMouseEnter={() => setIsHoveringSecondImage(true)}
+          onMouseLeave={() => setIsHoveringSecondImage(false)}
+        >
           <img src="/images/home/home_3.2.2.png" alt="Collage de imágenes 2" className="w-full h-auto object-cover" />
+          {isHoveringSecondImage && (
+            <video
+              src="/images/home/home_3_2_2_hover.mp4"
+              className="absolute top-0 left-0 w-full h-full object-cover"
+              autoPlay
+              loop
+              muted
+              playsInline
+            />
+          )}
         </div>
       </div>
 
