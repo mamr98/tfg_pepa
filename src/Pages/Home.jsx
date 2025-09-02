@@ -91,7 +91,7 @@ function Home() {
       </div>
 
       {/* Sección de dos imágenes */}
-      <div className="flex w-full">
+      <div className="flex w-full relative">
         <div className="w-1/2">
           <img src="/images/home/home_3.2.1.jpg" alt="Collage de imágenes 1" className="w-full h-auto object-cover" />
         </div>
@@ -112,6 +112,11 @@ function Home() {
             />
           )}
         </div>
+        <img
+          src="/images/stickers/8CHO_RECEIPTIFY.jpg"
+          alt="Sticker 8CHO RECEIPTIFY"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-64 pointer-events-none rotate-3"
+        />
       </div>
 
       <div className="relative h-screen w-full flex items-center justify-center overflow-hidden">
