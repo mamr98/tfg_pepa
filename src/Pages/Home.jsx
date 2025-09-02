@@ -4,8 +4,16 @@ import Lenis from "lenis";
 
 const defaultImage = "/images/home/home_3.1.jpg";
 const hoverImages = [
-  "/images/home/home_3.2.1.jpg",
-  "/images/home/home_3.2.2.png",
+  "/images/home/home_3_1_1.jpg",
+  "/images/home/home_3_1_2.jpg",
+  "/images/home/home_3_1_3.jpg",
+  "/images/home/home_3_1_4.jpg",
+  "/images/home/home_3_1_5.jpg",
+  "/images/home/home_3_1_6.jpg",
+  "/images/home/home_3_1_7.jpg",
+  "/images/home/home_3_1_8.jpg",
+  "/images/home/home_3_1_9.jpg",
+  "/images/home/home_3_1_10.jpg",
 ];
 // Array con las imágenes para la cuadrícula animada
 const gridImages = [
