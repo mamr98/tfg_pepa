@@ -1,6 +1,7 @@
 import React,
- { useState, useEffect } from "react";
+ { useState, useEffect, useRef } from "react";
 import Lenis from "lenis";
+import { useScroll, useTransform, motion } from "framer-motion";
 
 const defaultImage = "/images/home/home_3.1.jpg";
 const hoverImages = [
@@ -21,6 +22,29 @@ const gridImages = [
   "/images/home/home_3.4.2.jpg",
   "/images/home/home_3.4.3.jpg",
 ];
+
+// Hook personalizado para el efecto parallax
+function useParallax(value, distance) {
+  return useTransform(value, [0, 1], [-distance, distance]);
+}
+
+// Componente para la imagen con parallax para mantener el código más limpio
+function ParallaxImage({ src, alt }) {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref });
+  const y = useParallax(scrollYProgress, 90);
+
+  return (
+    <div ref={ref} className="relative h-[50vh] w-full flex items-center justify-center overflow-hidden">
+      <motion.img
+        src={src}
+        alt={alt}
+        className="absolute top-[-25%] left-0 w-full h-[150%] object-cover"
+        style={{ y }}
+      />
+    </div>
+  );
+}
 
 function Home() {
   const [currentImage, setCurrentImage] = useState(defaultImage);
@@ -134,19 +158,7 @@ function Home() {
         </a>
       </div>
 
-      <div className="relative h-screen w-full flex items-center justify-center overflow-hidden">
-        <img
-          src="/images/home/home_3.3.parallax.jpg"
-          alt="Discover yourself background"
-          className="absolute top-0 left-0 w-full h-full object-cover transition-all duration-200 ease-in-out"
-        />
-        <div
-          className="relative z-10 text-center cursor-pointer"
-          onMouseEnter={() => setIsHovering(true)}
-          onMouseLeave={() => setIsHovering(false)}
-        >
-        </div>
-      </div>
+      <ParallaxImage src="/images/home/home_3.3.parallax.jpg" alt="Imagen con efecto parallax" />
 
       <div className="w-full grid grid-cols-5">
         {Array.from({ length: 10 }).map((_, index) => (
